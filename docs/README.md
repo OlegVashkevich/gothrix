@@ -37,7 +37,8 @@ cmd/                        Основные приложения для тек�
     console/                Приложение консольных команд
         main.php      
 components/                 Компоненты (шаблоны и представления)
-    common/                 Общие компоненты (шаблоны и представления)
+    site/                   Общие компоненты (шаблоны и представления)
+    admin/                  Общие для админ раздела (шаблоны и представления)
 config/                     Файлы конфигурации
     config.php              Основной конфиг
 docs/                       Документация
@@ -45,7 +46,7 @@ internal/                   Внутренний код приложения и 
     hooks/                  Хуки  
     middleware/             Промежуточное ПО
         session/            Реализация сессий
-    routig/                 Маршрутизация
+    routes/                 Маршрутизация
     tasks/                  Задания для очереди задач 
 modules/                    Модули
     module_name/            Исходный код модуля
@@ -77,7 +78,7 @@ graph LR
         end
         subgraph ModuleAdminPages
             module_components[components]
-            module_router[router]
+            module_router[route.go]
             module_handlers[handlers]
         end
     end
@@ -88,17 +89,15 @@ graph LR
         hook
         task
     end
-    subgraph ComponentSystem
-        common_components
-        components
-    end
-    subgraph Out
-        json[\JSON\]
-        html[\HTML\]
-    end
     subgraph DB
         db[(DataBase)]
         inmemorydb[(In-Memory)]
+    end
+    subgraph Out
+        common_components
+        components
+        json[\JSON\]
+        html[\HTML\]
     end
     queue --> task
     task -- api --> services
