@@ -21,11 +21,11 @@
 - [`echo`](https://echo.labstack.com/) - каркас, роутинг, слой промежуточного ПО
 - [`sqlc`](https://sqlc.dev/) - простая "DB first" ОРМ, генерация типобезопасного кода из SQL
 - [`templ`](https://templ.guide/) - шаблонизатор, создание HTML с помощью Go
+- [`mysql`](https://www.mysql.com/) - реляционная база данных
+- [`redis`](https://redis.io/) - резидентная база данных (для сессий, кэша, очередей и т.п.)
 - [`htmx`](https://htmx.org/) - динамический HTML, возможность реализовать SPA+SSR на Go(обертка над AJAX)
 - [`alpinejs`](https://alpinejs.dev/) - реактивный HTML, легкий JS фреймворк
 - [`purecss`](https://purecss.io/) - легкий CSS каркас
-- [`mysql`](https://www.mysql.com/) - реляционная база данных
-- [`redis`](https://redis.io/) - резидентная база данных (для сессий, кэша, очередей и т.п.)
 
 
 ### Структура проекта
@@ -33,19 +33,20 @@
 ```
 cmd/                        Основные приложения для текущего проекта
     web/                    Web приложение
-        main.php      
+        main.php            Точка входа
     console/                Приложение консольных команд
         main.php      
-components/                 Переиспользуемые компоненты сайта
+components/                 Компоненты (шаблоны и представления)
+    common/                 Общие компоненты (шаблоны и представления)
 config/                     Файлы конфигурации
     config.php              Основной конфиг
 docs/                       Документация
 internal/                   Внутренний код приложения и библиотек
-    middleware/ 
-        session/   
+    hooks/                  Хуки  
+    middleware/             Промежуточное ПО
+        session/            Реализация сессий
+    routig/                 Маршрутизация
     tasks/                  Задания для очереди задач 
-    hooks/                  Хуки(события) используемые для этого какого то модуля   
-    common_components/      Общие компоненты (шаблоны и представления)
 modules/                    Модули
     module_name/            Исходный код модуля
         components/         Компоненты (шаблоны и представления) конкретного модуля    
@@ -53,30 +54,70 @@ modules/                    Модули
         helpers/            Вспомогательные структуры (фабрики, слушатели и т. д.)
             db/             Sql запросы для sqlc
         models/             Структуры модели предметной области (сущности, репозитории и т. д.)
-        module_name.go      Основной файл модуля
-        services/           Сервисный слой моудля используемый в обработчиках
+        services/           Сервисный слой модуля используемый в обработчиках
+        main.go             Основной файл модуля
         route.go            Файл с маршрутизацией модуля
-static/                     
+static/                  
 
 ```
 
 ```mermaid
 graph LR
-    task{{Task}} --> queue
-    queue --> services
-    web{{Web}} --> router
-    api{{API}} --> router
-    hooks <--> services
-    subgraph Module
-        router --> handler
-        handler --> services
-        services --> models[models]
-        handler -- renders --> components
+    subgraph In
+        queue{{Queue}}
+        web{{Web}}
+        api{{API}}
+        other{{Other}}
+        webadmin{{WebAdmin}}
     end
+    subgraph Module
+        subgraph ModuleApi
+            services
+            models[models]
+        end
+        subgraph ModuleAdminPages
+            module_components[components]
+            module_router[router]
+            module_handlers[handlers]
+        end
+    end
+    subgraph internal
+        middleware
+        router
+        handler
+        hook
+        task
+    end
+    subgraph component
+        common_components
+        components
+    end
+    subgraph Out
+        json
+        html
+    end
+
+    queue --> task
+    task -- api --> services
+    web --> middleware
+    api --> middleware
+    middleware --> router
+    other --> hook
+    hook -- api --> services
+    router --> handler
+    handler -- api --> services
+    services --> models[models]
+    handler -- renders --> components
     models --> mysql[(MySQL)]
-    other_module{{Other Module}} --> hooks
-    handler --> JSON[\JSON\]
-    components[\components\]  --> common_components[\Common components\]
+    handler --> json[\JSON\]
+    common_components -- nesting --> components
+    components  --> html
+    webadmin --> router
+    router --> module_router
+    module_router --> module_handlers
+    module_handlers --> module_components
+    module_handlers --> services
+    module_components --> html
 ```
 
 ### Потенциальные модули
