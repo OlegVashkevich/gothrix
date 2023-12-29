@@ -62,21 +62,21 @@ static/
 
 ```mermaid
 graph LR
-    task>Task] --> queue
+    task{{Task}} --> queue
     queue --> services
-    web>Web] --> router[router/echo/]
-    api>API] --> router
+    web{{Web}} --> router
+    api{{API}} --> router
     hooks <--> services
     subgraph Module
-    router --> handler
-    handler --> services
-    services --> model[models/sqlc/]
-    handler -- renders --> components
+        router --> handler
+        handler --> services
+        services --> models[models]
+        handler -- renders --> components
     end
-    model --> mysql[(MySQL)]
-    external_service>External Service] --> hooks
-    handler --> JSON
-    components[\components/Templ/\]  --> common_components[\Common components/Templ/\]
+    models --> mysql[(MySQL)]
+    external_service{{External Service}} --> hooks
+    handler --> JSON[\JSON\]
+    components[\components\]  --> common_components[\Common components\]
 ```
 
 ### Потенциальные модули
@@ -96,7 +96,7 @@ graph LR
 -   `media` - работа с файлами, от него может зависеть модуль content
 -   `seo` - метаданные страниц, от него может зависеть модуль content
 -   `property` - зависит от content - заведение свойств для контентной сущности
--   `filter` - фильтр по свойствам, зависит от content и property, если есть price или stock, то + они
+-   `ffilter` - фильтр по свойствам, зависит от content и property, если есть price или stock, то + они
 -   `comment` - комментарии, зависит от content и user
 
 
@@ -114,7 +114,7 @@ graph LR
 -   `delivery` - доставки у заказов, зависит от order
 
 ```mermaid
-    graph LR
+graph LR
     subgraph Admin
         admin --> user
         rbac --> user
@@ -124,8 +124,8 @@ graph LR
         content --> media
         content --> seo
         property --> content
-        filter --> content
-        filter --> property
+        ffilter --> content
+        ffilter --> property
         comment --> content
         comment --> user
     end
