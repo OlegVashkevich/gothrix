@@ -74,7 +74,7 @@ graph LR
         handler -- renders --> components
     end
     models --> mysql[(MySQL)]
-    external_service{{External Service}} --> hooks
+    other_module{{Other Module}} --> hooks
     handler --> JSON[\JSON\]
     components[\components\]  --> common_components[\Common components\]
 ```
