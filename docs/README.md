@@ -81,22 +81,25 @@ graph LR
             module_handlers[handlers]
         end
     end
-    subgraph internal
+    subgraph Internal
         middleware
         router
         handler
         hook
         task
     end
-    subgraph component
+    subgraph ComponentSystem
         common_components
         components
     end
     subgraph Out
-        json
-        html
+        json[\JSON\]
+        html[\HTML\]
     end
-
+    subgraph DB
+        db[(DataBase)]
+        inmemorydb[(In-Memory)]
+    end
     queue --> task
     task -- api --> services
     web --> middleware
@@ -108,16 +111,19 @@ graph LR
     handler -- api --> services
     services --> models[models]
     handler -- renders --> components
-    models --> mysql[(MySQL)]
-    handler --> json[\JSON\]
+    models --> db
+    handler --> json
     common_components -- nesting --> components
     components  --> html
     webadmin --> router
-    router --> module_router
+    router -- auto --> module_router
     module_router --> module_handlers
     module_handlers --> module_components
     module_handlers --> services
     module_components --> html
+    services --> inmemorydb
+    middleware --> inmemorydb
+    queue --> inmemorydb
 ```
 
 ### Потенциальные модули
