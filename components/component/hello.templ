@@ -1,0 +1,11 @@
+package component
+
+import (
+	"github.com/OlegVashkevich/templ_components/element"
+)
+
+//Hello шаблон для компонента
+templ Hello(name string) {
+	@element.H1("name")
+	<div>Hello, { name }!!</div>
+}
