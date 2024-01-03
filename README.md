@@ -27,6 +27,7 @@
 - [`htmx`](https://htmx.org/) - динамический HTML, возможность реализовать SPA+SSR на Go(обертка над AJAX)
 - [`alpinejs`](https://alpinejs.dev/) - реактивный HTML, легкий JS фреймворк
 - [`purecss`](https://purecss.io/) - легкий CSS каркас
+- [`air`](docs/air.md) - для разарботки: сборка шаблонов и горячая перезагрузка проекта
 
 
 ### Структура проекта
