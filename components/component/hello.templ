@@ -1,11 +1,39 @@
 package component
 
-import (
-	"github.com/OlegVashkevich/templ_components/element"
-)
+import "github.com/OlegVashkevich/templ_components/element"
 
 //Hello шаблон для компонента
 templ Hello(name string) {
 	@element.H1("name")
 	<div>Hello, { name }!!</div>
+}
+
+templ ShowAll(name string) {
+	<html>
+		<head>
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css"/>
+		</head>
+		<body>
+			@element.WrapChildren() {
+				<div>Inserted from the top</div>
+				@Hello(name)
+			}
+			@element.Block() {
+				<div>Block1</div>
+				@element.Block() {
+					<div>Block2</div>
+				}
+				@element.Box() {
+					<div>Box1</div>
+					@element.Box() {
+						<div>Box2</div>
+						@element.Box() {
+							<div>Box3</div>
+						}
+					}
+				}
+				@Hello(name)
+			}
+		</body>
+	</html>
 }

@@ -12,7 +12,7 @@ import (
 func main() {
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
-		return component.Hello("John").Render(c.Request().Context(), c.Response())
+		return component.ShowAll("John").Render(c.Request().Context(), c.Response())
 		//return c.String(http.StatusOK, "Hello, World!")
 	})
 	e.GET("/:id", func(c echo.Context) error {

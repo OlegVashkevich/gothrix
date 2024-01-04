@@ -5,7 +5,7 @@ go 1.21.5
 require github.com/a-h/templ v0.2.513
 
 require (
-	github.com/OlegVashkevich/templ_components v0.0.0-20240103095119-1601b8031823
+	github.com/OlegVashkevich/templ_components v0.0.0-20240103130442-0f999223a523
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
