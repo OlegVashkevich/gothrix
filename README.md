@@ -22,14 +22,14 @@
 
 ### Стек технологий
 - [`golang`](https://go.dev/) - компилируемый многопоточный язык программирования
-- [`echo`](https://echo.labstack.com/) - каркас, роутинг, слой промежуточного ПО
-- [`sqlc`](https://sqlc.dev/) - простая "DB first" ОРМ, генерация типобезопасного кода из SQL
+- [`echo`](https://echo.labstack.com/) - каркас, роутинг, слой промежуточного ПО(так же проверить `gofiber/fiber` и `go-chi/chi`)
+- [`sqlc`](https://sqlc.dev/) - простая "DB first" ОРМ, генерация типобезопасного кода из SQL(так же проверить `uptrace/bun`)
 - [`templ`](https://templ.guide/) - шаблонизатор, создание HTML с помощью Go
 - [`mysql`](https://www.mysql.com/) - реляционная база данных
 - [`redis`](https://redis.io/) - резидентная база данных (для сессий, кэша, очередей и т.п.)
 - [`htmx`](https://htmx.org/) - динамический HTML, возможность реализовать SPA+SSR на Go(обертка над AJAX)
 - [`alpinejs`](https://alpinejs.dev/) - реактивный HTML, легкий JS фреймворк
-- [`purecss`](https://purecss.io/) - легкий CSS каркас
+- [`purecss`](https://purecss.io/) - легкий CSS каркас(так же проверить `bulma`)
 - [`air`](docs/air.md) - для разарботки: сборка шаблонов и горячая перезагрузка проекта
 
 
